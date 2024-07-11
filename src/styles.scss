@@ -1,6 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
+// CSS Reset - start
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+// CSS Reset - end
+
 @media print {
   body {
     margin: 0 !important;
@@ -9,7 +49,8 @@
 
 .main-container {
   --ckeditor5-preview-sidebar-width: 270px;
-  --ckeditor5-preview-height: 700px;
+  --ckeditor5-preview-height: 300px;
+  // --ckeditor5-preview-height: calc(100vh - 170px);
   font-family: "Lato";
   width: fit-content;
   margin-left: auto;
@@ -82,7 +123,7 @@
   max-width: calc(210mm + 2px);
   min-height: 297mm;
   height: fit-content;
-  padding: 20mm 12mm;
+  padding: 6mm 12mm;
   border: 1px hsl(0, 0%, 82.7%) solid;
   background: hsl(0, 0%, 100%);
   box-shadow: 0 2px 3px hsla(0, 0%, 0%, 0.078);
