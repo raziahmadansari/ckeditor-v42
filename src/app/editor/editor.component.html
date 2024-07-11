@@ -1,6 +1,19 @@
 <div>
   <div class="main-container">
-    <div class="presence" #editorPresenceElement></div>
+    <div class="presence" #editorPresenceElement>
+      <button type="button" (click)="getData()">Get Data</button>
+      <button type="button" (click)="switchEditor()">Switch Editor</button>
+    </div>
+    <div>
+      <input
+        type="file"
+        #fileInput
+        placeholder="Select file"
+        (change)="uploadFile(fileInput.files)"
+        style="display: none"
+      />
+      <button type="button" (click)="fileInput.click()">Upload File</button>
+    </div>
     <div
       class="editor-container editor-container_document-editor editor-container_include-annotations editor-container_include-pagination"
       #editorContainerElement
