@@ -1,2 +1,7 @@
-<app-editor></app-editor>
+<ng-container *ngIf="isLayoutReady">
+  @for(editor of editors; track $index) {
+  <app-editor></app-editor>
+  }
+</ng-container>
+<ng-container #viewContainer></ng-container>
 <router-outlet></router-outlet>
