@@ -15,6 +15,8 @@ import {
   FontColor,
   FontFamily,
   FontSize,
+  FullPage,
+  GeneralHtmlSupport,
   Heading,
   Highlight,
   HorizontalLine,
@@ -67,13 +69,20 @@ import {
   ImportWord,
   MultiLevelList,
   Pagination,
+  PasteFromOfficeEnhanced,
   PresenceList,
   RealTimeCollaborativeComments,
   RealTimeCollaborativeEditing,
 } from 'ckeditor5-premium-features';
 
 import { LICENSE_KEY } from './editor.constant';
-import { AnnotationsSidebarToggler } from '../plugins';
+import {
+  AnnotationsSidebarToggler,
+  CommentsIntegration,
+  UsersIntegration,
+} from '../plugins';
+
+const data: string = `<p>This is random</p><p>paragraph with some dummy content.</p><ol><li>#fkdfj 1</li><li>#2dkfja ldsfj<ol><li>#434fjdk</li><li>dfdkf</li><li>foirjtr</li><li>rijt</li><li>gfgf<i>gfh f fg<u>fg fgfhh&nbsp;</u><s><u> fgfdf</u></s></i>ddf</li></ol></li><li>jkhd fkdhf</li></ol><p>&nbsp;</p><p>lksdjf ldfkj</p><p>dfdjf</p><p><span style="background-color:hsl(0, 75%, 60%);">fsdf dfdf</span><span style="background-color:hsl(0, 75%, 60%);color:hsl(60, 75%, 60%);">fsdf dffdsf</span></p><p>&nbsp;</p>`;
 
 export class EditorConfigBuilder {
   private config!: EditorConfig;
@@ -82,6 +91,7 @@ export class EditorConfigBuilder {
     this.config = {};
     this.config.licenseKey = LICENSE_KEY;
     this.config.placeholder = 'Type or paste your content here!';
+    this.config.initialData = data;
 
     // presenceList: {
     //   container: this.editorPresence.nativeElement,
@@ -97,6 +107,15 @@ export class EditorConfigBuilder {
     // collaboration: {
     //   channelId: UNIQUE_CHANNEL_PER_DOCUMENT,
     // },
+  }
+
+  addToolbarConfigLite(): EditorConfigBuilder {
+    this.config.toolbar = {
+      items: ['comment', 'commentsArchive'],
+      shouldNotGroupWhenFull: true,
+    };
+
+    return this;
   }
 
   addToolbarConfig(): EditorConfigBuilder {
@@ -197,6 +216,8 @@ export class EditorConfigBuilder {
       FontColor,
       FontFamily,
       FontSize,
+      FullPage,
+      GeneralHtmlSupport,
       Heading,
       Highlight,
       HorizontalLine,
@@ -222,9 +243,10 @@ export class EditorConfigBuilder {
       Pagination,
       Paragraph,
       PasteFromOffice,
+      PasteFromOfficeEnhanced,
       // PresenceList,
-      RealTimeCollaborativeComments,
-      RealTimeCollaborativeEditing,
+      // RealTimeCollaborativeComments,
+      // RealTimeCollaborativeEditing,
       RemoveFormat,
       SelectAll,
       SpecialCharacters,
@@ -251,8 +273,70 @@ export class EditorConfigBuilder {
     return this;
   }
 
+  addMinimalPluginsSupport(): EditorConfigBuilder {
+    this.config.plugins = [
+      Alignment,
+      AutoLink,
+      Autosave,
+      BalloonToolbar,
+      BlockQuote,
+      Bold,
+      Code,
+      Comments,
+      Essentials,
+      FontBackgroundColor,
+      FontColor,
+      FontFamily,
+      FontSize,
+      GeneralHtmlSupport,
+      Heading,
+      Highlight,
+      HorizontalLine,
+      ImageBlock,
+      ImageCaption,
+      ImageInline,
+      ImageResize,
+      ImageStyle,
+      ImageTextAlternative,
+      ImageToolbar,
+      Indent,
+      IndentBlock,
+      Italic,
+      Link,
+      Mention,
+      PageBreak,
+      Pagination,
+      Paragraph,
+      RemoveFormat,
+      SelectAll,
+      SpecialCharacters,
+      SpecialCharactersArrows,
+      SpecialCharactersCurrency,
+      SpecialCharactersEssentials,
+      SpecialCharactersLatin,
+      SpecialCharactersMathematical,
+      SpecialCharactersText,
+      Strikethrough,
+      Subscript,
+      Superscript,
+      Table,
+      TableCaption,
+      TableCellProperties,
+      TableColumnResize,
+      TableProperties,
+      TableToolbar,
+      Underline,
+    ];
+
+    return this;
+  }
+
   addExtraPluginsSupport(): EditorConfigBuilder {
-    this.config.extraPlugins = [AnnotationsSidebarToggler];
+    this.config.extraPlugins = [
+      AnnotationsSidebarToggler,
+      UsersIntegration,
+      CommentsIntegration,
+    ];
 
     return this;
   }
@@ -392,6 +476,21 @@ export class EditorConfigBuilder {
     return this;
   }
 
+  addHTMLSupport(): EditorConfigBuilder {
+    this.config.htmlSupport = {
+      allow: [
+        {
+          name: /^.*$/,
+          styles: true,
+          attributes: true,
+          classes: true,
+        },
+      ],
+    };
+
+    return this;
+  }
+
   addImageConfig(): EditorConfigBuilder {
     this.config.image = {
       toolbar: [
@@ -472,6 +571,7 @@ export class EditorConfigBuilder {
         right: '12mm',
         left: '12mm',
       },
+      enableOnUnsupportedBrowsers: true,
     };
 
     return this;
